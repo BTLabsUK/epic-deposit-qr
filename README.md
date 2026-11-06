@@ -14,9 +14,11 @@ epic:<address>?message=<note>&require=message&min=<epic>&label=<text>
 | --- | --- |
 | `<address>` | Epicbox address: `es<50 characters>@<relay>[:port]` |
 | `message` | Note, percent-encoded as UTF-8. At most 264 characters. |
-| `require=message` | The wallet must not send without a note. |
-| `min` | Optional. Decimal amount in EPIC, above 0, at most 8 decimals. |
+| `require=message` | Asks the wallet to warn when the note is empty. The sender can still send. |
+| `min` | Optional. Decimal amount in EPIC, above 0, at most 8 decimals. The wallet warns below it. The sender can still send. |
 | `label` | Optional. Text shown to the sender. At most 64 characters. |
+
+Write `message`. A reader also accepts `note` and `memo` for the same field, and ignores parameters it does not know.
 
 The text of the code, the copy text and the link on a page are the same `epic:` string. The code is level H (about 30% of the symbol can be damaged), with a quiet zone of 4 modules. An optional logo covers about 22% of the side.
 
