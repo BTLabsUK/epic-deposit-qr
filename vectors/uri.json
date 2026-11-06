@@ -1,0 +1,14 @@
+[
+  {
+    "address": "esWxboBPMgL4RqufRYcGUJ7t6YVWGvyuid6xRM62UkRzSb3jUcNK@epicbox.exchange.example",
+    "note": "4827193065148",
+    "minimum": "0.1",
+    "label": "Deposit",
+    "uri": "epic:esWxboBPMgL4RqufRYcGUJ7t6YVWGvyuid6xRM62UkRzSb3jUcNK@epicbox.exchange.example?message=4827193065148&require=message&min=0.1&label=Deposit"
+  },
+  {
+    "address": "esWxboBPMgL4RqufRYcGUJ7t6YVWGvyuid6xRM62UkRzSb3jUcNK@epicbox.exchange.example",
+    "note": "Ref 4827 & café (é)!",
+    "uri": "epic:esWxboBPMgL4RqufRYcGUJ7t6YVWGvyuid6xRM62UkRzSb3jUcNK@epicbox.exchange.example?message=Ref%204827%20%26%20caf%C3%A9%20%28%C3%A9%29%21&require=message"
+  }
+]

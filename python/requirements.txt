@@ -1,0 +1,3 @@
+segno==1.6.6
+# optional, for a logo in PNG:
+pillow
