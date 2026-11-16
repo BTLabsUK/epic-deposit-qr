@@ -57,6 +57,53 @@ png = qr_png(uri, logo_png_bytes)
 
 The input is checked: a bad address, an empty or long note, or a bad minimum raises an error. A string beyond what version 40 at level H holds is rejected by the library.
 
+## Per-user deposit code
+
+For an exchange that matches EPIC deposits by memo. The exchange has one Epicbox address and gives each user a memo. The deposit page shows a code that carries both.
+
+1. Keep the deposit address and each user's memo on the server (the memo is whatever the exchange already matches on).
+2. Build the string with `depositUri` or `deposit_uri`.
+3. Render it as an SVG and put the SVG on the page.
+4. Show the `epic:` string and the memo as text next to the code, for wallets that cannot scan it.
+
+JavaScript (Node, server side):
+
+```js
+import { depositUri, qrSvg } from './js/deposit-qr.js';
+
+const ADDRESS = 'esWxboBPMgL4RqufRYcGUJ7t6YVWGvyuid6xRM62UkRzSb3jUcNK@epicbox.exchange.example'; // made up
+
+export async function depositCode(user) {
+  const uri = depositUri({ address: ADDRESS, note: user.memo, minimum: '0.1', label: 'Deposit' });
+  return { uri, memo: user.memo, svg: await qrSvg(uri) };
+}
+```
+
+Python:
+
+```python
+from deposit_qr import deposit_uri, qr_svg
+
+ADDRESS = "esWxboBPMgL4RqufRYcGUJ7t6YVWGvyuid6xRM62UkRzSb3jUcNK@epicbox.exchange.example"  # made up
+
+def deposit_code(user):
+    uri = deposit_uri(ADDRESS, user.memo, minimum="0.1", label="Deposit")
+    return {"uri": uri, "memo": user.memo, "svg": qr_svg(uri)}
+```
+
+In a template, insert `svg` as markup and `uri` as the link target and copy text. Generate the code on the server from stored values, and not from text a user typed into the page. `minimum` and `label` are optional.
+
+## Wallet behaviour
+
+Epic Wallet from v26.11.4 reads the code. Other wallets may differ.
+
+- Scanning opens Send with the address and the note filled in.
+- An empty note (`require=message`) or an amount below `min` shows a warning.
+- The sender can always still send. The code asks for a note and a minimum; it does not enforce them.
+- `memo=` and `note=` are read as aliases of `message=`.
+
+The exchange still has to match the memo on its side and decide what to do with a deposit that has none or is below its own minimum.
+
 ## Wallets without note support
 
 A wallet that does not read `message` may still read the address from the string, or may refuse it. The note is then not filled, and the sender has to enter it by hand. Show the `epic:` string as text next to the code, so it can be copied, and show the note on its own as well.
